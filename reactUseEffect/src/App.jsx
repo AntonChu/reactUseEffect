@@ -11,17 +11,18 @@ const PersonalInfo = () => {
     setInfo({id: target.id, name: target.name})
   };
 
-  useEffect(Details, [info.id])
-//   async function GetData(url) {
-//     const response = await fetch("https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json")
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log(data);
-//       return data.map(el => <div>{el.id}</div>);
-//     });
-// }
+  // useEffect(Details, [info.id])
+
+  async function GetData() {
+    const response = await fetch("https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+}
 
   // const getData = () => {
   //   let request = new XMLHttpRequest();
@@ -38,8 +39,8 @@ const PersonalInfo = () => {
 
   return (
     <div className="wrapper">
-      <List click={Click}/>
-      <Details id={id}/>
+      <List click={Click} GetData={GetData}/>
+      {/* <Details id={id}/> */}
     </div>
   );
 };
