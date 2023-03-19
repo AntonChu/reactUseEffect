@@ -5,42 +5,30 @@ import { Details } from "./components/Details";
 
 const PersonalInfo = () => {
   const [info, setInfo] = useState(null);
+  console.log(info);
+  const [listData, setListData] = useState([]);
 
-  const Click = (event) => {
-    const target = event.target['что-то'];
-    setInfo({id: target.id, name: target.name})
+  const click = (item) => {
+    setInfo(item);
   };
 
-  // useEffect(Details, [info.id])
+  useEffect(() => {
+    const getData = async () => {
+      const request = await fetch(
+        "https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json"
+      );
+      const response = await request.json();
+      setListData(response);
+    };
+    getData();
+  }, []);
 
-  async function GetData() {
-    const response = await fetch("https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      return data;
-    });
-}
 
-  // const getData = () => {
-  //   let request = new XMLHttpRequest();
-  //   request.open("GET", "https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json");
-  //   request.responseType = "json";
-  //   request.send();
-  //   request.onreadystatechange = function () {
-  //     if (request.readyState === request.DONE) {
-  //       console.log(request.response)
-  //       return('done');
-  //     }
-  //   };
-  // };
 
   return (
     <div className="wrapper">
-      <List click={Click} GetData={GetData}/>
-      {/* <Details id={id}/> */}
+      <List click={click} listData={listData} />
+      <Details info={info} />
     </div>
   );
 };
